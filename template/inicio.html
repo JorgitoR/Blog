@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% load static  %}
+
+{% block head %}
+  {{ form.media }}
+{% endblock %}
+
+
+{% block contenedor %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+
+<div class="div_categoria">
+    {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+    {% endfor %}
+    <a href="{% url 'Interes' %}">
+      <button class="boton_interes">
+        Filtrar Por Categoria
+      </button>
+    </a>
+   
+</div>
+
+<div class="div_main_blog">
+
+  {% for lista in lista %}
+   {% if lista.publicado > hoy %}
+   {% else %}
+	<div class="div_blog">
+      <img src="{{lista.imagen.url}}" class="img_main_blogs">
+      <h3 class="">
+      	{{lista.titulo}}
+      </h3>
+
+      <span class="hastag" >
+        {{lista.tags}}
+      </span>
+
+      <div style="margin: 10px 0;">
+        {% if lista.usuario.imagen %}
+        <img class="userAvatar" src="{{lista.usuario.imagen.url}}" style="margin-right: 7px!important;">
+        {% else %}
+        <img class="userAvatar" src="{% static 'img/usuario.png' %}" style="margin-right: 7px!important;">
+        {% endif %}
+        <a href="{% url 'usuario_detail' lista.usuario.username  %}">
+         {{lista.usuario}}
+        </a>
+
+        <small style="display: block;">{{lista.tiempo}}</small>
+      </div>
+
+    
+
+      <p class="p_blog">
+      	{{lista.get_markdown|truncatechars:300}}
+      </p>
+
+      <a href="{{lista.get_absolute_url}}">
+      	<button class="boton_leer">
+      		Seguir Leyendo
+      	</button>
+      </a>
+
+	</div>
+  {% endif %}
+  {% empty %}
+
+    <h1>Actualiza Tus Interes</h1>
+
+	{% endfor %}
+ </div>
+
+
+<style>
+  
+  .div_blog{
+    word-wrap: break-word;
+  }
+</style>
+
+
+{% endblock %}

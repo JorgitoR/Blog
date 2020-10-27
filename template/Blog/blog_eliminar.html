@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+  {{ form.media }}
+{% endblock %}
+
+
+{% block contenedor %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+<div class="div_eliminar">
+	{{blog}}
+
+	<h2>
+		Comfirmar Acción 
+	</h2>
+	<p>
+		Estas seguro de que quieres eliminar el blog <strong>"{{blog.titulo}}"</strong>?
+		¿No hay buelta atras?
+	</p>
+
+	<form method="post">
+		{% csrf_token %}
+
+	<div class="div_acion">
+
+		<button type="submit" class="btn_eliminar">
+			Si, estoy seguro
+		</button>
+
+		<a href="{% url 'ListaBlog' %}" class="no_actiob_btn">
+			No, llevame atras
+		</a>
+
+	</div>
+	</form>
+
+</div>
+
+<style>
+	
+	.div_eliminar{
+		width: 50%;
+		margin: 100px auto;
+	}
+
+	.div_acion{
+		width: 
+	}
+
+	.btn_eliminar, .no_actiob_btn{
+		border:none;
+		padding: 8px;
+		border-radius: 3px;
+		outline: none;
+
+	}
+
+</style>
+
+{% endblock %}

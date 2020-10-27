@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block contenedor %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+<div class="div_tags">
+	
+	<h1>
+		#{{tags.tag}}
+	</h1>
+
+	<div>
+		{% for tags in tags.obtener_tags %}
+		<div class="mis_blogs">
+ 		<img src="{{tags.imagen.url}}" style="width: 100%;">
+      	<a href="{{tags.get_absolute_url}}">
+            <h3>
+      		<span>
+      			{{tags.titulo}}
+      		</span>
+      	</h3>
+            </a>
+      	<div>
+      		<small>
+      			{{tags.tiempo}}
+      		</small>
+      	</div>
+
+      	<div>
+      		{{tags.get_markdown|truncatechars:100}}
+      	</div>
+
+             <a href="{{lista.get_absolute_url}}">
+            <button class="boton_leer">
+                  Seguir Leyendo
+            </button>
+            </a>
+
+            </div>
+		{% endfor %}
+	</div>
+
+</div>
+
+<style>
+	.div_tags{
+		width: 50%;
+		margin: 100px auto;
+	}
+</style>
+
+{% endblock %}

@@ -1,0 +1,107 @@
+{% load static %}
+
+<div class="div_header">
+	
+	<div class="div_header_dos">
+		
+		<div class="div_titulo_head">
+			<a href="/" class="boton_a a_titulo_heaed">
+				Blog RoiBack
+			</a>
+		</div>
+
+		<div class="div_ul">
+			
+			<div class="div_menu">
+				
+				<div class="div_contenido">
+					
+					<ul>
+						<li>
+							<div class="buscador">
+								<div class="buscador_div">
+									
+									<form id="buscar" method="GET" action="/buscar/">
+										
+										<input type="text" id="buscar" name="busqueda" autocomplete="off" placeholder="Buscar...">
+
+										<button class="buscar_icono">
+                                			<i class="fab fa-searchengin"></i>
+										</button>
+
+									</form>
+
+
+								</div>
+							</div>
+
+							<div id="resultados">
+								
+							</div>
+						</li>
+					</ul>
+
+				</div>
+
+			</div>
+
+
+			<div class="div_item">
+				{% if user.is_authenticated %}
+
+				<div>
+					<a href="{% url 'crear_blog' %}" class="boton_heaed">
+						Crear Blog
+					</a>
+				</div>
+
+				<div>
+					<a href="{% url 'ListaBlog' %}">
+						
+						{% if user.imagen %}
+							<img src="{{user.imagen.url}}" class="img_perfil_head">
+						{% else %}
+							<img src="{% static 'img/usuario.png' %}" class="img_perfil_head">
+						{% endif %}
+
+					</a>
+				</div>
+
+				{% else %}
+
+				<div>
+					<a href="{% url 'Registro' %}" class="boton_heaed">
+						Registrate
+					</a>
+				</div>
+
+				<div>
+					<a href="{% url 'login' %}" class="boton_heaed">
+						Iniciar Sesion
+					</a>	
+				</div>
+
+				{% endif %}
+
+			</div>
+
+
+		</div>
+
+	</div>
+
+
+</div>
+
+
+<style>
+
+li{
+	list-style: none;
+}
+
+a{
+	text-decoration: none!important;
+}
+
+</style>

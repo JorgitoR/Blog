@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  {{ form.media }}
+{% endblock %}
+
+
+{% block contenedor %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+<div class="div_usuario_detail">
+	
+	<div class="" style="width: 50%; margin: auto;">
+		<header style="width: 100%; text-align: center;">
+			<div>
+			{% if object.imagen %}
+			<img src="{{object.imagen.url}}">
+			{% else %}
+			<img src="{% static 'img/usuario.png' %}">
+			{% endif %}
+			</div>
+			<a href="{% url 'usuario_detail' object.username  %}" style="margin: 10px 0px; padding: 10px;">
+				{{object.username}}
+			</a>
+		</header>
+	</div>
+
+	<div class="div_blogs_user">
+		
+		{% for blogs in object.blog.all  %}
+		<div class="div_blog">
+			<img src="{{blogs.imagen.url}}" class="img_main_blogs">
+			<h3>
+				{{blogs.titulo}}
+			</h3>
+			 
+			<span class="hastag" >
+        		{{blogs.tags}}
+      		</span>
+
+      		<div style="margin: 10px 0;">
+      			<small>{{blogs.tiempo}}</small>
+      		</div>
+
+      		<p>
+      			{{blogs.get_markdown|truncatechars:50}}
+      		</p>
+
+      		<a href="{{blogs.get_absolute_url}}">
+      			<button class="boton_leer">
+      				Seguir Leyendo
+      			</button>
+      		</a>
+			
+		</div>
+		{% endfor %}
+
+	</div>
+
+</div>
+
+<style>
+	
+	.div_usuario_detail{
+		width: 80%;
+		margin: 100px auto;
+	}
+
+</style>
+
+{% endblock %}

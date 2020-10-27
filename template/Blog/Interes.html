@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  {{ form.media }}
+{% endblock %}
+
+
+{% block contenedor %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+<div class="div_interes">
+<form method="POST">
+	
+	{% csrf_token %}
+	
+	<div class="div_interes_select">
+	<header class="header_intere">
+		<h3>
+			Selecciona tus Intereses
+		</h3>
+	</header>
+	{{form.interes}}
+
+	<button type="submit" class="boton_leer">
+		Filtrar por Categoria
+	</button>
+	</div>
+
+</form> 
+</div>
+
+
+{% endblock %}

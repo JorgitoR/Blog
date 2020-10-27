@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  {{ form.media }}
+{% endblock %}
+
+
+{% block contenedor %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+ 
+ <div class="listas_blog">
+ 	
+ <div class="perfil">
+
+ 	<div class="">
+
+    {% if user.imagen %}
+ 		<img src="{{user.imagen.url}}" class="img_perfil">
+    {% else %}
+    <img src="{% static 'img/usuario.png' %}" class="img_perfil">
+    {% endif %}
+
+ 		<div class="div_logout">
+      <a href="{% url 'ListaBlog' %}" class="a_logout">@{{user.username}}</a>
+ 			<a href="{% url 'logout' %}" class="a_logout">
+ 				Cerrar Sesion
+ 			</a>
+ 		</div>
+ 	</div>
+ 	
+ </div>
+
+   {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+    {% endfor %}
+
+  {% for blog in blogs %}
+ 	<div class="mis_blogs">
+ 		<img src="{{blog.imagen.url}}" style="width: 100%;">
+      	<a href="{{blog.get_absolute_url}}">
+        <h3>
+      		<span>
+      			{{blog.titulo}}
+      		</span>
+      	</h3>
+        </a>
+
+        {% if blog.publicado > hoy %}
+        <span class="ver_future" >
+          Se habilitara el {{blog.publicado}} 
+        </span>
+        {% endif %}
+
+      	<div>
+      		<small>
+      			{{blog.tiempo}}
+      		</small>
+      	</div>
+
+      	<div>
+      		{{blog.get_markdown|truncatechars:100}}
+      	</div>
+
+        <hr>
+
+        <div class="div_bottom">
+
+            <div class="div_coment">
+              
+              <button class="btn_comentarios">
+                <i class="far fa-comment-dots"></i> {{blog.comentario.count}}
+                Comentario{% if blog.comentario.count > 1 %}s{% else %}{% endif %}
+              </button>
+
+            </div>
+
+            <div class="div_delete_update">
+            <a href="{% url 'ActualizarBlog' blog.pk %}">
+            <button class="actualizar_btn">
+              Actualizar
+            </button>
+            </a>
+
+            <a href="{% url 'BlogEliminar' blog.pk %}">
+            <button class="b_eliminar">
+              Eliminar
+            </button>
+            </a>
+            </div>
+
+        </div>
+
+     </div>
+
+  {% empty %}
+
+    <a href="{% url 'crear_blog' %}">
+    <button type="submit" class="boton_leer" style="color: pointer;">
+      Crear Tu primer Blog
+    </button>
+    </a>
+
+
+  {% endfor %}
+ 
+
+ </div>
+
+ <style>
+
+ .ver_future{
+  padding: 7px;
+  cursor: pointer;
+  background: #2196f3;
+  color: #fff;
+  border-radius: 50px;
+  display: block;
+  width: 200px;
+  text-align: center;
+  font-size: 13px;
+  margin: 10px 0;
+ }
+
+ .div_logout{
+  width: 100%;
+ }
+  .a_logout{
+    display: block;
+    margin: auto;
+    text-align: center;
+  }
+
+  .actualizar_btn{
+
+    border:none;
+    outline: none;
+    border-radius: 3px;    
+    border: 1px solid #333;
+    color: #333;
+    background: #fff;
+ 
+  }
+
+  .btn_comentarios{
+    border:none;
+    background: #fff;
+    color: #333;
+    outline: none;
+    cursor: pointer;
+
+  }
+
+  .div_bottom{
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+  }
+  .div_coment{
+    width: 50%;
+  }
+
+  .div_delete_update{
+    width: 50%;
+  }
+
+  .div_delete_update button{
+    float: right;
+    margin: 0px 5px;
+  }
+
+ </style>
+
+{% endblock %}

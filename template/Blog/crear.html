@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+  {{ form.media }}
+{% endblock %}
+
+
+{% block contenedor %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+<div class="div_crear_blog">
+	
+  <div class="div_form">
+	<form method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+
+		{{form.as_p}}
+
+		<button type="submit" class="enviar_pagedown">
+			Crear Post
+		</button>
+
+	</form>
+  </div>
+
+</div>
+
+<style>
+	
+	.div_crear_blog{
+		width: 60%;
+		margin:100px auto;
+	}
+
+  .div_form{
+    width: 100%;
+  }
+
+	#id_titulo, #id_categoria, #id_tags{
+
+		border:1px solid #e6e6e6;
+    	width: 98%;
+    	height: 34px;
+    	-webkit-box-flex: 1;
+    	-webkit-flex: 1 0 auto;
+    	-ms-flex: 1 0 auto;
+    	flex: 1 0 auto;
+    	margin: 0;
+    	outline: 0;
+    	overflow: hidden;
+    	padding: 9px 0 7px 8px;
+    	text-overflow: ellipsis;
+    	background: #fafafa;
+    	font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    	font-size: 14px;
+    	line-height: 18px;
+	}
+
+
+  .wmd-button > span{
+        background-image: url(https://cdn.sstatic.net/Img/unified/wmd-buttons.svg?v=c26278fc22d9);
+  }	
+
+  .wmd-wrapper{
+  	display: flex;
+  }
+
+
+
+  .wmd-panel{
+  	    border: 1px solid #e6e6e6;
+  }
+
+  .wmd-preview-title{
+  	display: none;
+  }
+
+  .wmd-preview {
+    border: 1px solid #e6e6e6;
+    background: #fff;
+    box-sizing: border-box;
+    font-size: 14px;
+    width: 300px;
+    min-width: 300px;
+    overflow-x: auto;
+    margin-bottom: 0.5rem;
+    word-break: break-all;
+    word-break: break-word;
+    max-height: 300px;
+    line-height: 1.5;
+    -webkit-line-clamp: 10;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+
+    overflow-y: auto !important;
+  }
+
+
+  #id_texto{
+  	outline: none;
+    padding: 7px;
+    background-color: #fff;
+    max-width: 500px;
+    min-width: 500px;
+    min-height: 147px;
+    border: 1px solid #e6e6e6;
+    height: 259px!important;
+  }
+
+  .wmd-panel{
+  	margin: 0;
+  }
+
+.fa-reply-all{
+    color: #00bcd4!important;
+}
+
+.responder_boton{
+    outline: none;
+    border:none;
+    padding: 7px;
+    margin: 7px 0;
+    border:1px solid #e6e6e6;
+    border-radius:4px;
+    color: #00BCD4;
+
+}    
+
+.enviar_pagedown{
+	outline: none;
+    border: none;
+    border-radius: 50px;
+    padding: 10px;
+    width: 100px;
+    cursor: pointer;
+    color: #fff;
+    background: #03A9F4;
+	transition: all .3s;
+
+}
+
+.enviar_pagedown:hover{
+	transition: all .3s;
+    background: #2196f3;
+}
+
+
+
+</style>
+                
+
+{% endblock %}

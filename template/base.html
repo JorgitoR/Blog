@@ -1,0 +1,185 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Blog ROIBACK</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+		<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+        <link rel="stylesheet" type="text/css" href="{% static 'css/inicio.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static 'css/MiPerfil.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/detail.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/header.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
+
+
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/interes.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/categoria.css' %}">
+
+		<link rel="stylesheet" type="text/css" href="{% static 'js/comentarios.js' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'js/like.js' %}">
+		
+		{% block head %}
+ 		{% endblock %}
+
+</head>
+<body>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+
+	{% include 'header.html' %}
+
+
+	<div class="contenedor">
+		{% block contenedor %}
+		{% endblock %}
+	</div>
+
+    {% include 'footer.html' %}
+
+<style>
+
+.alert{
+    width: 98%;
+    height: 50px;
+    background: #4CAF50;
+    color: #fff;
+    visibility: visible;
+    opacity: 1;
+    display: block!important;
+    z-index: 1000;
+    position: relative;    
+} 
+
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<script>
+
+        $('.hastag').each(function(data){
+
+            var hashtagRegex = /(^|\s)#([\w\d-]+)/g
+            var currentHtml = $(this).html()
+            var newText;
+            newText = currentHtml.replace(hashtagRegex, "$1<a class='atag' href='/tag/$2/'>#$2</a>")
+            $(this).html(newText)
+
+
+      })
+
+        
+    function Like(){
+
+    var liked = $(this)
+    var pk = liked.data('id')
+    var action = liked.data('action')
+   
+
+    $.ajax({
+        url : "/api/" + pk + "/" + action + "/",
+        type: 'GET',
+        data:{'blog_qs':pk},
+
+        success : function(json){
+            console.log(json)
+            console.log(json.liked)
+
+
+            if(json.liked == true){
+            
+                $('#id_like').addClass('follow_boton_ajax')
+
+                $('#id_like').text('Dislike')
+               
+
+            }else if(json.liked == false){
+
+
+                var UnFollow = "<button class='follow_boton'>Seguir</button>"
+
+                $('#id_like').removeClass('follow_boton_ajax')
+                $('#id_like').text('Like')
+            }
+
+        }
+    })
+
+}
+
+$(function() {
+    $('[data-action="Like"]').click(Like);
+});
+
+
+
+          // Esta funcion obtiene un cookie con un nombre de pila
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // ¿Esta cadena de cookies comienza con el nombre que queremos?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
+    /*
+    La funcion abajo creará un header con csrf_token
+    */
+
+    function csrfSafeMethod(method) {
+       
+        //Este metodo HTTP no requiere la protecion CSRF  
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    function sameOrigin(url) {
+        //  prueba que una URL dada es una URL del mismo origen
+        // url podría ser relativo o esquema relativo o absoluto
+        var host = document.location.host; // host + port
+        var protocol = document.location.protocol;
+        var sr_origin = '//' + host;
+        var origin = protocol + sr_origin;
+        // Permitir URLs absolutas o relativas al mismo origen
+        return (url == origin || url.slice(0, origin.length + 1) == origin + '/') ||
+            (url == sr_origin || url.slice(0, sr_origin.length + 1) == sr_origin + '/') ||
+            // o cualquier otra URL que no sea un esquema relativo o absoluto, es decir, relativo.
+            !(/^(\/\/|http:|https:).*/.test(url));
+    }
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && sameOrigin(settings.url)) {
+                // Envia el Token al mismo origen,solo URL relativas.
+                // Envíe el token solo si el método garantiza la protección CSRF
+                // Usando el valor CSRFToken adquirido anteriormente
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+</script>
+
+
+</body>
+
+<style>
+	
+	.contenedor{
+		
+	}
+
+</style>
+
+
+</html>

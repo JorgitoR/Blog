@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+
+{% load  liked %}
+{% load static %}
+
+{% block contenedor %}
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+<div class="post-header">
+    <article>
+        <header class="entry-header">
+            <div class="div_img_head_blog">
+                
+                    <img class="placeholder img_slug" src="{{blog.imagen.url}}" alt="{{blog.titulo}}" scale="0">
+                  
+                    <div class="background-image" style="background: url({{blog.imagen.url}}) no-repeat center center">
+
+                <div class="div_img_superposicion">
+                    <div class="div_columna_img">
+                        <div class="columns twelve">
+                            <h5 class="category-heading">
+                                Roiback Blog
+                            </h5>
+                            <h1 class="h1_titulo_blog">
+                                {{blog.titulo}}      
+                                </
+                            </h1>
+
+                            <p class="entry-meta">
+                                Publicado por 
+                                <span class="entry-author" title="{{blog.usuario}}">
+                                    {{blog.usuario}}
+                                </span>
+                                • {{blog.tiempo }}                   
+                            </p>
+
+                            <div class="entry-share">
+                                <ul class="ul-sharing">
+                                    <li>
+                                        <a class="icon-facebook" target="_blank" href="http://www.facebook.com/sharer/sharer.php?u=https://iso.500px.com/landscape-photography-pro-tips/"></a>
+                                    </li>
+                                    <li>
+                                        <a class="icon-twitter" target="_blank" href="http://twitter.com/home?status=Landscape+Photography+%7C+23+Actionable+Tips+To+Stir+Emotions+https://iso.500px.com/landscape-photography-pro-tips/"></a>
+                                    </li>
+                                    <li>
+                                        <a class="icon-pinterest" target="_blank" href="http://pinterest.com/pin/create/button/?url=https://iso.500px.com/landscape-photography-pro-tips/&amp;media=https://iso.500px.com/wp-content/uploads/2014/06/W4A2827-1.jpg&amp;description=Landscape+Photography+%7C+23+Actionable+Tips+To+Stir+Emotions"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                                            </div>
+        </div></header>
+    </article>
+</div>
+
+<div style="width: 50%; margin: 5px auto;">
+
+     {% for message in messages %}
+        <div class="alert {{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+    {% endfor %}
+
+    <span class="hastag">
+        {{blog.tags}}
+    </span>
+
+     <button class="btn_like" id="id_like" class="follow_boton" data-action='Like' data-id="{{blog.id}}" style="float: none!important;">
+
+         {% if request.user in blog.like.all %}
+            Dislike
+        {% else %}
+            Like
+        {% endif %}
+
+    </button>
+        
+</div>
+
+<div class="div_texto">
+    {{blog.get_markdown}}
+</div>
+
+<div class="div_comentario">
+    
+    <h2>Comentar</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+
+        <textarea class="id_comentario" name="comentario" id="id_comentario" required="" rows="10" cols="40" placeholder="Escribenos tu opinión" class="vLargeTextField"></textarea>
+
+        <button class="botonComment"  data-id="{{blog.id}}" data-type="comentario" data-action="comentar">
+        Enviar
+        </button>
+
+    </form>
+
+    <div class="div_all_comentarios" style="margin: 30px 0;">
+        
+        {% for comentarios in blog.comentario.all %}
+            <div style="display: flex;">
+
+             <div class="div_img" style="float: left; margin-right: 5px!important;">
+                {% if comentarios.usuario.imagen %}
+                <a style="background-image:url({{comentarios.usuario.imagen.url}})" class="userAvatar " ></a>
+                {% else %}
+                <a style="background-image:url({% static 'img/usuario.png' %})" class="userAvatar "></a>
+                {% endif %}
+             </div>   
+
+            <div class="div_texto_comentario" style="display: table; min-width: 100%; table-layout: auto; padding-right: 0;
+            margin: 0;">
+               
+               <div class="sub_div_texto">
+                   
+                   <div>
+                       <strong>
+                        {{comentarios.usuario}}
+                       </strong>
+                       <span style="color: #333;">
+                        {{comentarios.tiempo}}
+                       </span>
+                   </div>
+
+                   <div style="margin: 10px 0;">
+                        {{comentarios.texto}}
+                   </div>
+                   {{comentarios.pk}}
+
+                   <div>
+                       <a href="{% url 'ComentEliminar' comentarios.pk %}">
+                           Eliminar Comentario
+                       </a>
+                   </div>
+
+               </div> 
+
+            </div>
+
+            </div>
+            <hr>
+        {% empty %}
+
+        {% endfor %}
+
+
+    </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+
+<script>
+    
+        function comentario(){
+
+        var comentar = $(this);
+        var type       = comentar.data('type')
+        var pk         = comentar.data('id')
+        var action     = comentar.data('action')
+
+        $.ajax({
+            url  : "/api/" + type + "/" + pk + "/" + action + "/",
+            type : 'POST',
+            data : {comentario : $('#id_comentario').val()},
+
+            success : function(json){
+
+             $('#id_comentario').val('');
+
+             console.log(json)
+
+            },
+
+
+        });
+
+        return false;
+
+    }
+
+    $(function(){
+        $('[data-action="comentar"]').click(comentario);
+    })
+
+</script>
+
+<style>
+
+.ul-sharing .icon-facebook {
+    background-image: url({% static 'img/facebook.png' %});
+    border-radius: 3px 0 0 3px;
+}
+
+.ul-sharing .icon-twitter {
+    background-image: url({% static 'img/twitter_1.png' %});
+}
+
+.ul-sharing .icon-pinterest {
+    background-image: url({% static 'img/pinterest.png' %});
+    border-radius: 0 3px 3px 0;
+}
+
+
+
+</style>
+
+
+{% endblock %}
