@@ -1,0 +1,82 @@
+p{
+    font-size: 15px!important; 
+    font-weight: 500!important; 
+    text-align: justify!important;
+}
+
+.img_main_blogs{
+	width: 100%;
+}
+
+.div_categoria{
+
+    width: 90%;
+    margin: 100px auto 0px auto;
+    box-sizing: border-box;
+}
+
+.boton_interes{
+  border:none;
+  border-radius:3px;
+  outline: none;
+  padding: 7px;
+  color: #fff;
+  cursor: pointer;
+  display: block;
+  background: #333;
+
+}
+
+.div_main_blog{
+    width: 90%;
+    margin: 10px auto;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.div_blog{
+    width: 48%;
+    margin: 7px;
+    padding: 7px;
+    background-color: #fff;
+    border: 1px solid #cdcfd2;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+
+.boton_leer{
+	display: block;
+	margin: 20px auto;
+	position: relative;
+	bottom: 0;
+	padding: 10px;
+	border:none;
+	background: #fff;
+    border:1px solid #333;
+    box-shadow: 0 1px 1px 0 #333;
+    border-radius: 3px;
+    box-sizing: border-box;
+    color: #333;
+    cursor: pointer;
+    font-family: Lato,sans-serif;
+    text-decoration: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -moz-transition: .2s;
+    -o-transition: .2s;
+    -ms-transition: .2s;
+    transition: .2s;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
+}

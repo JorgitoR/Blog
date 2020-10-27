@@ -1,0 +1,39 @@
+
+ h3{
+ 	color: #111;
+ }
+
+ .img_perfil{
+ 	vertical-align: middle;
+ 	display: block;
+ 	margin:5px auto;
+ }
+
+ .perfil{
+ 	width: 50%;
+ 	margin: 10px auto;
+ 	border-bottom: 1px solid #333;
+ }
+ 	
+ 	.listas_blog{
+ 		width: 60%;
+ 		margin: 100px auto;
+ 	}
+
+ .mis_blogs{
+ 	width: 100%;
+ 	background: #fff;
+ 	border:1px solid #cdcfd2;
+ 	border-radius: 5px;
+ 	margin: 10px 0;
+ 	padding: 7px;
+ }
+
+ .b_eliminar{
+ 	border:none;
+ 	outline: none;
+ 	border-radius: 3px;    
+ 	border: 1px solid #bb0404;
+    color: #fff;
+    background: #d00e00;
+ }
